@@ -1,8 +1,10 @@
-import { Link, useParams } from "react-router-dom"
+import { /* Link, */ useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
 import axios from "axios"
 import styled from "styled-components"
 import Footer from "./Footer"
+import ButtonHandle from "./ButtonHandle";
+
 export default function Seats() {
 
     const { idSessao } = useParams();
@@ -10,6 +12,7 @@ export default function Seats() {
     const [hour, setHour] = useState("")
     const [weekday, setWeekday] = useState("")
     const [movie, setMovie] = useState("")
+
     useEffect(() => {
         const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`)
 
@@ -27,7 +30,7 @@ export default function Seats() {
         <Container>
             Selecione o(s) assento(s)
             <AllButtons>
-                {seats.map((value, ind) => <Button key={ind}>{value.name}</Button>)}
+                {seats.map((value, ind) => <ButtonHandle name={value.name} key={ind}/>)}
 
                 <Disponibility>
                     <Selected>
@@ -78,22 +81,6 @@ width: 100%;
 margin-top: 30px;
 display: flex;
 flex-wrap: wrap;
-`
-
-//the button from the seat without the style
-const Button = styled.div`
-width: 26px;
-height: 26px;
-border-radius: 50%;
-font-size: 11px;
-
-display: flex;
-justify-content: center;
-align-items: center;
-background-color: #C3CFD9;
-border: 1px solid #808F9D;
-
-margin: 10px 3.5px;
 `
 
 
