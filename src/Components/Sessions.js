@@ -1,14 +1,14 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import styled from "styled-components"
 import axios from "axios";
 import Footer from "./Footer";
 export default function Sessions() {
-    const { sessions } = useParams();
+    const { idFilme } = useParams();
     const [times, setTimes] = useState([])
     const [allData, setAllData] = useState([])
     useEffect(() => {
-        const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${sessions}/showtimes`);
+        const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${idFilme}/showtimes`);
         promise
             .then((value) => {
                 setTimes(value.data.days)
@@ -16,7 +16,7 @@ export default function Sessions() {
             })
             .catch((err) => console.log(err))
     }, [])
-    console.log(allData.posterURL)
+
     return (
         <Container>
             Selecione o horário
@@ -24,12 +24,12 @@ export default function Sessions() {
 
                 {/* {days.showtimes} */}
                 <div>
-                    {days.showtimes.map((hours, i) => <Button key={i}>{hours.name}</Button>)}
+                    {days.showtimes.map((hours, i) => <Link key={i} to={`/assentos/${hours.id}`}><Button >{hours.name}</Button></Link>)}
                 </div>
 
             </Day>))}
 
-            <Footer title={allData.title} picture={allData.posterURL}/>
+            <Footer title={allData.title} picture={allData.posterURL} />
         </Container>
 
     )
@@ -37,7 +37,6 @@ export default function Sessions() {
 
 const Container = styled.div`
     margin: 100px 10px 134px;
-    /* width: 100%; */
 
     font-size: 24px;
     color: #293845;
