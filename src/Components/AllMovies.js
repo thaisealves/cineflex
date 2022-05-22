@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import axios from "axios"
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react"
 export default function AllMovies() {
     const [images, setImages] = useState([]);
@@ -17,7 +18,7 @@ export default function AllMovies() {
             Selecione o Filme
             {/* putting a map to render every image in an individual way */}
             <Posters>
-                {images.map((poster, ind) => <img key={ind} src={poster.posterURL} alt="Poster do filme" />)}
+                {images.map((poster, ind) => <Link key={ind} to={`/sessoes/${poster.id}`}><img src={poster.posterURL} alt="Poster do filme" /></Link>)}
             </Posters>
 
         </Container>
@@ -48,6 +49,6 @@ const Posters = styled.div`
         margin: 10px 0;
         padding: 8px;
         border-radius: 3px;
-        box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+        box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.5);
     }
 `
