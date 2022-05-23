@@ -33,8 +33,7 @@ const Container = styled.div`
     color: #293845;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    
+    justify-content: center;    
 `
 const Posters = styled.div`
     margin: 30px 0;

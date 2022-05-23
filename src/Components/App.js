@@ -22,7 +22,7 @@ export default function App() {
                 <Route path="/" element={<AllMovies />} />
                 <Route path="/sessoes/:idFilme" element={<Sessions />} />
                 <Route path="/assentos/:idSessao" element={<Seats hour={hour} setHour={setHour} movie={movie} setMovie={setMovie} setTitle={setTitle} name={name} setName={setName} cpf={cpf} setCpf={setCpf} reserved={reserved} setReserved={setReserved} setDate={setDate} />} />
-                <Route path="/sucesso" element={<Success reserved={reserved} name={name} cpf={cpf} title={title} hour={hour} date={date} />} />
+                <Route path="/sucesso" element={<Success reserved={reserved} setReserved={setReserved} name={name} setName={setName} cpf={cpf} setCpf={setCpf} title={title} hour={hour} date={date} />} />
             </Routes>
         </BrowserRouter>
     )

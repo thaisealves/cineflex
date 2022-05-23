@@ -28,7 +28,6 @@ export default function ButtonHandle({ name, id, avaiable, reserved, setReserved
         else { alert("Poxa... Esse assento não está disponível!") }
     }
 
-
     return (
         <ButtonSeat onClick={handleClick} colorBtn={colorBtn}>
             {name}

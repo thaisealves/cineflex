@@ -1,7 +1,15 @@
 import styled from "styled-components"
-import { Link } from "react-router-dom"
-export default function Success({reserved, name, cpf, title, hour, date}) {
-    console.log(reserved)
+import { Link, useNavigate } from "react-router-dom"
+
+export default function Success({ reserved, name, cpf, title, hour, date, setReserved, setName, setCpf }) {
+    const navigate = useNavigate();
+   function goHome (){
+    navigate("/")
+    setReserved([]);
+    setName("");
+    setCpf("");
+
+}
     return (
         <Container>
             <Done>
@@ -30,10 +38,10 @@ export default function Success({reserved, name, cpf, title, hour, date}) {
                     <p>CPF: {cpf}</p>
                 </Costumer>
             </div>
-            <StyledLink to={`/`}><Button>
+            <Button onClick={goHome}>
                 Voltar pra Home
             </Button>
-            </StyledLink>
+
         </Container >
     )
 
