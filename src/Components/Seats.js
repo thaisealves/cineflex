@@ -30,7 +30,7 @@ export default function Seats() {
         <Container>
             Selecione o(s) assento(s)
             <AllButtons>
-                {seats.map((value, ind) => <ButtonHandle name={value.name} key={ind}/>)}
+                {seats.map((value, ind) => <ButtonHandle name={value.name} avaiable={value.isAvailable} key={ind}/>)}
 
                 <Disponibility>
                     <Selected>

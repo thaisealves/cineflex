@@ -1,20 +1,27 @@
 import styled from "styled-components"
 import { useState, useEffect } from "react"
-export default function ButtonHandle({ name }) {
+export default function ButtonHandle({ name, avaiable }) {
     const [colorBtn, setColorBtn] = useState("#C3CFD9")
-    const [isSelected, setIsSelected] = useState(false)
+    const [isSelected, setIsSelected] = useState(false) 
 
-    useEffect(() => { isSelected ? setColorBtn("#8DD7CF") : setColorBtn("#C3CFD9") }, [isSelected])
+    useEffect(() => {isSelected ? setColorBtn("#8DD7CF") : setColorBtn("#C3CFD9") }, [isSelected])
+    useEffect(() => {
+        if (!avaiable) {
+            setColorBtn("#FBE192")
+            
+        }
+    }, [])
 
-
+    function handleClick(){
+        avaiable ? setIsSelected(!isSelected) :  alert("Poxa... Esse assento não está disponível!")
+    }
     return (
-        <ButtonSeat onClick={() =>  setIsSelected(!isSelected)} colorBtn={colorBtn}>
+        <ButtonSeat onClick={handleClick} colorBtn={colorBtn}>
             {name}
         </ButtonSeat>
     )
-
-
 }
+
 
 
 //the button from the seat without the style
