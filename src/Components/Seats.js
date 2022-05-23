@@ -1,17 +1,19 @@
-import { /* Link, */ useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
 import axios from "axios"
 import styled from "styled-components"
 import Footer from "./Footer"
 import ButtonHandle from "./ButtonHandle";
 
-export default function Seats() {
+export default function Seats({ hour, setHour, movie, setMovie, reserved, setReserved, name, setName, cpf, setCpf, setDate, setTitle }) {
 
     const { idSessao } = useParams();
     const [seats, setSeats] = useState([])
-    const [hour, setHour] = useState("")
     const [weekday, setWeekday] = useState("")
-    const [movie, setMovie] = useState("")
+    const [reservedId, setReservedId] = useState([])
+
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`)
@@ -22,15 +24,33 @@ export default function Seats() {
                 setHour(value.data.name)
                 setWeekday(value.data.day.weekday)
                 setMovie(value.data.movie)
+                setDate(value.data.day.date)
+                setTitle(value.data.movie.title)
             })
             .catch((err) => console.log(err))
 
     }, [])
+
+    function formHandler(event) {
+        event.preventDefault();
+
+        let body = {
+            ids: reservedId,
+            name: name,
+            cpf: cpf
+        }
+        if (cpf.length >= 11) {
+            const promise = axios.post("https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many", body)
+            promise
+                .then(navigate("/sucesso"))
+                .catch((err) => console.log(err))
+        }
+    }
     return (
         <Container>
             Selecione o(s) assento(s)
             <AllButtons>
-                {seats.map((value, ind) => <ButtonHandle name={value.name} avaiable={value.isAvailable} key={ind}/>)}
+                {seats.map((value, ind) => <ButtonHandle name={value.name} id={value.id} avaiable={value.isAvailable} reserved={reserved} setReserved={setReserved} reservedId={reservedId} setReservedId={setReservedId} key={ind} />)}
 
                 <Disponibility>
                     <Selected>
@@ -47,14 +67,14 @@ export default function Seats() {
                     </Unavaiable>
                 </Disponibility>
             </AllButtons>
-            <Forms>
+            <Forms onSubmit={formHandler}>
                 <div>
                     <label htmlFor="nome">Nome do comprador:</label>
-                    <input type="text" id="nome" placeholder="Digite seu nome..." />
+                    <input type="text" id="nome" value={name} onChange={(e) => setName(e.target.value)} placeholder="Digite seu nome..." required />
                 </div>
                 <div>
                     <label htmlFor="CPF">CPF do comprador:</label>
-                    <input type="number" id="CPF" placeholder="Digite seu CPF..." />
+                    <input type="number" id="CPF" value={cpf} onChange={(e) => setCpf(e.target.value)} placeholder="Digite seu CPF..." required />
                 </div>
 
                 <button type="submit">Reservar assento(s)</button>
@@ -66,6 +86,8 @@ export default function Seats() {
     )
 
 }
+
+
 
 //everyting in this page
 const Container = styled.div`
